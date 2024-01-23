@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Carbon Field Url Picker
  * Description: Url Picker Field extension for Carbon Fields.
- * Version: 3.0.6
+ * Version: 3.0.10
  * Author: Ionuț Staicu
  * Author URI: https://ionutstaicu.com
  * License: GPL2
@@ -12,6 +12,15 @@
  * Domain Path: /languages
  */
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require( __DIR__ . '/vendor/autoload.php' );
-}
+require( __DIR__ . '/vendor/autoload.php' );
+
+define('Carbon_Field_UrlPicker\\DIR', __DIR__);
+
+add_action('after_setup_theme', function () {
+
+    Carbon_Fields::extend(UrlPicker_Field::class, function ($container) {
+        return new UrlPicker_Field( $container['arguments']['type'], $container['arguments']['name'], $container['arguments']['label'] );
+    });
+
+}, 99);
+
